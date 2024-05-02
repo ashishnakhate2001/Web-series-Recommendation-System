@@ -6,6 +6,9 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
 <body>
@@ -16,11 +19,28 @@
         
             
             <form name="passdata" action="/recommendations" method="post">
-            <input type="text"   name="moviename" placeholder="Enter a Tv-Series/Movie">
+            <!-- <input type="text"   name="moviename" placeholder="Enter a Tv-Series/Movie"> -->
+            <input type="text" id="moviename" name="moviename" placeholder="Enter a Web-Series">
             <input type="submit" value="Submit">
             
     </div>
 </form>
-
+<script>
+    $( function() {
+        var availableTitles = [
+    "Mirzapur", "Kota Factory", "The Forgotten Army", "Tripling", "Sweet Home", 
+    "Vikrant Massey", "Breathe: Into the Shadows", "Maharani", "What the Folks!", 
+    "Sacred Games", "The Family Man", "Delhi Crime", "Scam 1992: The Harshad Mehta Story", 
+    "Paatal Lok", "Scam 1995: The Harshad Mehta Story", "Aarya", "Bandish Bandit", 
+    "The Gone Game", "Pushpavalli", "Yeh Ballet", "Selection Day", "Pataal Lok 2", 
+    "Mismatched", "The Raiker Case", "Rangbaaz", "Gullak", "Bhaag Beanie Bhaag", 
+    "Sacred Games (Season 2)", "The Family Man (Season 2)", "Criminal Justice (Season 2)", 
+    "Asur: Welcome to Your Dark Side", "Little Things (Seasons 1-4)", "She", "Paatal Lok (Season 2)"
+];
+        $( "#moviename" ).autocomplete({
+            source: availableTitles
+        });
+    } );
+</script>
 </body>
 </html>
