@@ -1,3 +1,21 @@
+import pandas as pd
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+# Load the CSV file into a DataFrame
+df = pd.read_csv('data/netflix_titles.csv')
+
+# Get a list of all titles
+titles = df['title'].tolist()
+
+@app.route('/')
+def home():
+    return render_template('index.html', titles=titles)
+
+# Existing code in app.py starts here
+
+
 from flask import Flask,render_template,request
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -51,9 +69,8 @@ def get_recommendations(title, cosine_sim):
 app = Flask(__name__)
   
 @app.route('/')
-
 def index():
-    return render_template('index.html')
+    return render_template('index.html', titles=titles)
 
 
 @app.route('/recommendations',methods=['POST'])
