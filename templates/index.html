@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Web series Recommendation System</title>
-
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
-
 <body>
     <div>
         <h1><mark>Web series Recommendation System</mark></h1>
@@ -23,21 +21,33 @@
 </form>
     </div>
     
+    <img id="loading" src="{{ url_for('static', filename='loading.gif') }}" style="display: none;">
+
     <script>
         // fetching title form csv
         $( function() {
-                    var availableTitles = {{ titles|tojson|safe }};
-                    $( "#moviename" ).autocomplete({
-                        source: availableTitles,
-                    });
-                });
+            var availableTitles = {{ titles|tojson|safe }};
+            $( "#moviename" ).autocomplete({
+                source: availableTitles,
+            });
+        });
                    
-                // onclick search
-                $("#moviename").on('keyup', function (e) {
-                    if (e.key == 'Enter' || e.keyCode == 13) {
-                        $("form[name='passdata']").submit();
-                    }
-                });
+        // onclick search
+        $("#moviename").on('keyup', function (e) {
+            if (e.key == 'Enter' || e.keyCode == 13) {
+                $("form[name='passdata']").submit();
+            }
+        });
+
+        // show loading image on form submit
+        $("form[name='passdata']").on('submit', function() {
+            $('#loading').show();
+
+            // hide loading image after a few seconds
+            setTimeout(function() {
+                $('#loading').hide();
+            }, 3000); // 3000 milliseconds = 3 seconds
+        });
     </script>
 </body>
 </html>
