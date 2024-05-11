@@ -1,39 +1,51 @@
 body {
     background-image: url(background.png);
     background-size: cover;
-    color:white;
+    color: white;
     text-align: center;
-    padding-top:5px;
+    padding-top: 5px;
+    background-color: #141414;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 h1 {
-    padding-top:150px;
-    color:white;
-    text-align:center;
+    padding-top: 150px;
+    color: white;
+    text-align: center;
     font-size: 50px;
+    color: #e50914;
+    font-size: 3em;
 }
 
-p1{
-    font-size:30px;
-    color: black
+p1 {
+    font-size: 30px;
+    color: black;
 }
 
-span {background-color: white;}
+span {
+    background-color: white;
+}
 
 form {
-    padding-top:50px;
-    width:100%;
+    padding-top: 50px;
+    width: 100%;
 }
 
-input[type=text]{
+input[type=text] {
     width: 20%;
     padding: 12px 20px;
     border: none;
+    background-color: #555555;
+    color: #ffffff;
+    border-radius: 0.3em;
 }
 
-input[type=submit]{
+input[type=submit] {
     background-color: DodgerBlue;
     border: none;
     padding: 12px 20px;
-
+    background-color: #e50914;
+    color: #ffffff;
+    border-radius: 0.3em;
+    cursor: pointer;
 }
