@@ -1,5 +1,7 @@
 import pandas as pd
 from flask import Flask, render_template, request
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 app = Flask(__name__)
 
@@ -15,21 +17,12 @@ def home():
 
 # Existing code in app.py starts here
 
-
-from flask import Flask,render_template,request
-import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-
-
 def clean_data(x):
     return str.lower(x.replace(" ", ""))
-
 
 def create_soup(x):
     return x['title']+ ' ' + x['director'] + ' ' + x['cast'] + ' ' +x['listed_in']+' '+ x['description']
 
-    
 netflix_overall = pd.read_csv('data/netflix_titles.csv')
 netflix_data = pd.read_csv('data/netflix_titles.csv')
 netflix_data = netflix_data.fillna('')
@@ -37,10 +30,8 @@ netflix_data = netflix_data.fillna('')
 new_features = ['title', 'director', 'cast', 'listed_in', 'description']
 netflix_data = netflix_data[new_features]
 
-
 for new_features in new_features:
     netflix_data[new_features] = netflix_data[new_features].apply(clean_data)
-
 
 netflix_data['soup'] = netflix_data.apply(create_soup, axis=1)
 count = TfidfVectorizer(stop_words='english')
@@ -49,7 +40,6 @@ global cosine_sim2
 cosine_sim2 = cosine_similarity(count_matrix, count_matrix)
 netflix_data=netflix_data.reset_index()
 indices = pd.Series(netflix_data.index, index=netflix_data['title'])
-
 
 def get_recommendations(title, cosine_sim):
     global result
@@ -65,25 +55,16 @@ def get_recommendations(title, cosine_sim):
     del result['index']    
     return result
 
-  
-app = Flask(__name__)
-  
 @app.route('/')
 def index():
     return render_template('index.html', titles=titles)
 
-
 @app.route('/recommendations',methods=['POST'])
-
 def getvalue():
     moviename = request.form['moviename']
-   
     get_recommendations(moviename,cosine_sim2)
-
     df=result
     return render_template('result.html',  tables=[df.to_html()], titles=df.columns.values)
        
-    
 if __name__ == '__main__':
-  
     app.run(debug=True)

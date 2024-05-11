@@ -17,18 +17,26 @@
     
         <p1><span>ENTER A WEB SERIES NAME THAT YOU JUST WATCHED</span></p1>
         
-        <form name="passdata" action="/recommendations" method="post">
-            <input type="text" id="moviename" name="moviename" placeholder="Enter a Web-Series">
-            <input type="submit" value="Submit">
-        </form>
+<form name="passdata" action="/recommendations" method="post">
+    <input type="text" id="moviename" name="moviename" placeholder="Enter a Web-Series">
+    <input type="submit" value="Search">
+</form>
     </div>
     
     <script>
+        // fetching title form csv
         $( function() {
                     var availableTitles = {{ titles|tojson|safe }};
                     $( "#moviename" ).autocomplete({
                         source: availableTitles,
                     });
+                });
+                   
+                // onclick search
+                $("#moviename").on('keyup', function (e) {
+                    if (e.key == 'Enter' || e.keyCode == 13) {
+                        $("form[name='passdata']").submit();
+                    }
                 });
     </script>
 </body>
